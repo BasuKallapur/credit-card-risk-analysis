@@ -90,4 +90,14 @@ streamlit run app.py
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. 
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Advanced Analysis & Presentation
+
+- To run a full model comparison and generate new metrics/visualizations, use the main analysis script:
+  ```
+  python analysis/credit_card_fraud_detection.py
+  ```
+  This will output updated performance metrics and visualizations used in the dashboard.
+
+- For tips on presenting your results, see [../docs/guide.md](guide.md). 

@@ -171,3 +171,35 @@ This project demonstrates:
 2. The importance of thorough feature analysis
 3. How to identify and understand data leakage issues
 4. Building a practical, user-friendly prediction interface
+
+## Streamlit Dashboard (Interactive App)
+
+This project includes an interactive dashboard built with Streamlit for real-time fraud prediction and model exploration.
+
+### How to Launch the Dashboard
+
+1. Ensure you have trained the model and scaler files by running:
+   ```
+   python fraud_predictor.py
+   ```
+2. Start the dashboard:
+   ```
+   streamlit run app.py
+   ```
+3. Open your browser to [http://localhost:8501](http://localhost:8501) to use the app.
+
+For detailed usage instructions, see [docs/streamlit_app_README.md](docs/streamlit_app_README.md).
+
+### Dashboard Features
+- Predict if a transaction is fraudulent
+- Visualize model performance and feature importance
+- Compare different models interactively
+- Explore data leakage findings
+
+The dashboard uses metrics from `data/model_metrics.csv` for model performance visualizations.
+
+---
+
+## Presentation Guide
+
+If you are preparing a demo or presentation, see [docs/guide.md](docs/guide.md) for tips on how to present your results and key findings.
