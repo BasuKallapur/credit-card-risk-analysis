@@ -1,3 +1,19 @@
+# Credit Card Fraud Detection
+Demo Video: [Watch Demo](https://drive.google.com/file/d/1lZ4IcC6M86f20kwWBCAvDLqeP0-Wv0Xa/view?usp=drive_link)
+
+
+# Credit Card Fraud Detection
+
+This project implements machine learning models for credit card fraud detection, with a focus on identifying and addressing data leakage issues while providing a practical application.
+
+## Project Overview
+
+The project consists of:
+
+1. **Analysis Script** (`credit_card_fraud_detection.py`): Compares four models (Logistic Regression, Decision Tree, SGD, Random Forest)
+2. **Model Training** (`fraud_predictor.py`): Trains and saves the best model (Random Forest)
+3. **Prediction Interface** (`predict_fraud.py`): User-friendly interface for fraud prediction
+
 # Project Structure
 
 ```
@@ -16,18 +32,6 @@ credit-card-risk-analysis/
 ```
 
 ---
-
-# Credit Card Fraud Detection
-
-This project implements machine learning models for credit card fraud detection, with a focus on identifying and addressing data leakage issues while providing a practical application.
-
-## Project Overview
-
-The project consists of:
-
-1. **Analysis Script** (`credit_card_fraud_detection.py`): Compares four models (Logistic Regression, Decision Tree, SGD, Random Forest)
-2. **Model Training** (`fraud_predictor.py`): Trains and saves the best model (Random Forest)
-3. **Prediction Interface** (`predict_fraud.py`): User-friendly interface for fraud prediction
 
 ## Model Comparison
 
