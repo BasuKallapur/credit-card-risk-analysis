@@ -1,3 +1,22 @@
+# Project Structure
+
+```
+credit-card-risk-analysis/
+├── .gitignore
+├── .python-version
+├── app.py                     # Streamlit entry point
+├── fraud_model.pkl            # Trained model
+├── scaler.pkl                 # Scaler for preprocessing
+├── fraud_predictor.py         # Model loading + prediction logic
+├── requirements.txt           # Dependencies
+├── render.yaml                # (optional) Render config
+├── runtime.txt                # (optional) for Python version
+├── card_transdata copy.csv    # If needed at runtime
+└── ...                        # Other files (pngs, analysis scripts)
+```
+
+---
+
 # Credit Card Fraud Detection
 
 This project implements machine learning models for credit card fraud detection, with a focus on identifying and addressing data leakage issues while providing a practical application.

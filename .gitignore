@@ -43,8 +43,8 @@ coverage.xml
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# pyenv
-.python-version
+# # pyenv
+# .python-version
 
 # mypy
 .mypy_cache/

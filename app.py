@@ -8,6 +8,7 @@ import os
 from fraud_predictor import predict_transaction
 import plotly.graph_objects as go
 import plotly.express as px
+import json
 
 # Page configuration
 st.set_page_config(
@@ -36,10 +37,17 @@ def load_data():
             df = pd.read_csv("card_transdata copy.csv")
         except:
             df = pd.read_csv("card_transdata.csv")
-        return df
+        return df, None  # None means not static
     except:
-        st.warning("Dataset not found for exploration view. Only prediction will be available.")
-        return None
+        # Load static sample and stats
+        try:
+            sample = pd.read_csv("static_sample.csv")
+            with open("static_stats.json") as f:
+                stats = json.load(f)
+            return sample, stats
+        except:
+            st.warning("Dataset not found for exploration view. Only prediction will be available.")
+            return None, None
 
 def create_correlation_heatmap(df):
     corr = df.corr()
@@ -104,7 +112,7 @@ def create_feature_importance_chart():
 def main():
     # Load model and data
     model, scaler = load_model_and_scaler()
-    data = load_data()
+    data, static_stats = load_data()
     
     # Sidebar navigation
     st.sidebar.title("Navigation")
@@ -143,8 +151,14 @@ def main():
         # Display key metrics if data is available
         if data is not None:
             st.subheader("Dataset Overview")
-            total_transactions = len(data)
-            fraud_percent = data['fraud'].mean() * 100
+            if static_stats is None:
+                # Use real data
+                total_transactions = len(data)
+                fraud_percent = data['fraud'].mean() * 100
+            else:
+                # Use static stats
+                total_transactions = static_stats["total_transactions"]
+                fraud_percent = static_stats["fraud_percent"]
             
             col1, col2, col3 = st.columns(3)
             with col1:
@@ -566,7 +580,7 @@ def main():
 
         # Load metrics from CSV
         try:
-            metrics_df = pd.read_csv("model_metrics.csv")
+            metrics_df = pd.read_csv("data/model_metrics.csv")
         except Exception as e:
             st.error(f"Could not load model metrics: {e}")
             return
@@ -604,12 +618,12 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 try:
-                    st.image("confusion_matrix_Random Forest.png", caption="Confusion Matrix", use_container_width=True)
+                    st.image("assets/confusion_matrix_Random Forest.png", caption="Confusion Matrix", use_container_width=True)
                 except:
                     st.warning("Confusion matrix image not found.")
             with col2:
                 try:
-                    st.image("roc_curve_Random Forest.png", caption="ROC Curve", use_container_width=True)
+                    st.image("assets/roc_curve_Random Forest.png", caption="ROC Curve", use_container_width=True)
                 except:
                     st.warning("ROC curve image not found.")
             st.subheader("Feature Importance")
@@ -669,12 +683,12 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 try:
-                    st.image("confusion_matrix_Logistic Regression.png", caption="Confusion Matrix", use_container_width=True)
+                    st.image("assets/confusion_matrix_Logistic Regression.png", caption="Confusion Matrix", use_container_width=True)
                 except:
                     st.warning("Confusion matrix image not found.")
             with col2:
                 try:
-                    st.image("roc_curve_Logistic Regression.png", caption="ROC Curve", use_container_width=True)
+                    st.image("assets/roc_curve_Logistic Regression.png", caption="ROC Curve", use_container_width=True)
                 except:
                     st.warning("ROC curve image not found.")
             st.subheader("Performance Metrics")
@@ -719,12 +733,12 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 try:
-                    st.image("confusion_matrix_Decision Tree.png", caption="Confusion Matrix", use_container_width=True)
+                    st.image("assets/confusion_matrix_Decision Tree.png", caption="Confusion Matrix", use_container_width=True)
                 except:
                     st.warning("Confusion matrix image not found.")
             with col2:
                 try:
-                    st.image("roc_curve_Decision Tree.png", caption="ROC Curve", use_container_width=True)
+                    st.image("assets/roc_curve_Decision Tree.png", caption="ROC Curve", use_container_width=True)
                 except:
                     st.warning("ROC curve image not found.")
             st.subheader("Performance Metrics")
@@ -770,12 +784,12 @@ def main():
             col1, col2 = st.columns(2)
             with col1:
                 try:
-                    st.image("confusion_matrix_SGD Classifier.png", caption="Confusion Matrix", use_container_width=True)
+                    st.image("assets/confusion_matrix_SGD Classifier.png", caption="Confusion Matrix", use_container_width=True)
                 except:
                     st.warning("Confusion matrix image not found.")
             with col2:
                 try:
-                    st.image("roc_curve_SGD Classifier.png", caption="ROC Curve", use_container_width=True)
+                    st.image("assets/roc_curve_SGD Classifier.png", caption="ROC Curve", use_container_width=True)
                 except:
                     st.warning("ROC curve image not found.")
             st.subheader("Performance Metrics")
@@ -833,7 +847,7 @@ def main():
         st.dataframe(comparison_df, use_container_width=True)
         st.subheader("Precision-Recall Curves")
         try:
-            st.image("precision_recall_curve.png", caption="Precision-Recall Curves for All Models", use_container_width=True)
+            st.image("assets/precision_recall_curve.png", caption="Precision-Recall Curves for All Models", use_container_width=True)
         except:
             st.warning("Precision-recall curve image not found.")
         st.subheader("Model Selection Rationale")
