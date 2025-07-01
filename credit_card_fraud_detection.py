@@ -24,9 +24,8 @@ except FileNotFoundError:
         # Then try with "copy" in the name
         df = pd.read_csv("card_transdata copy.csv")
     except FileNotFoundError:
-        # Fall back to the original path if needed
-        print("Warning: Using hardcoded path as local file not found")
-        df = pd.read_csv(r"C:\Users\basuk\Desktop\ML AAT\Credit-Card-fraud-detection\card_transdata copy.csv")
+        print("Error: Dataset file not found. Please ensure 'card_transdata.csv' or 'card_transdata copy.csv' is present in the working directory.")
+        exit(1)
 
 # Display basic information about the dataset
 print("Dataset Information:")
