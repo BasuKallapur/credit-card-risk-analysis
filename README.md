@@ -144,9 +144,9 @@ python predict_fraud.py
 ```
 
 This allows you to:
-- Enter transaction details
-- Get instant fraud predictions
-- See explanations of risk factors
+- Use the sidebar to navigate between different pages
+- On the Fraud Prediction page, enter transaction details to get a prediction
+- On the Model Performance page, analyze model performance
 
 ## Implementation Details
 

@@ -32,51 +32,13 @@ def load_model_and_scaler():
 # Function to load dataset for exploration
 @st.cache_data
 def load_data():
-    try:
-        try:
-            df = pd.read_csv("card_transdata copy.csv")
-        except:
-            df = pd.read_csv("card_transdata.csv")
-        return df, None  # None means not static
-    except:
-        # Load static sample and stats
-        try:
-            sample = pd.read_csv("static_sample.csv")
-            with open("static_stats.json") as f:
-                stats = json.load(f)
-            return sample, stats
-        except:
-            st.warning("Dataset not found for exploration view. Only prediction will be available.")
-            return None, None
+    return None, None
 
 def create_correlation_heatmap(df):
-    corr = df.corr()
-    fig = px.imshow(
-        corr, 
-        color_continuous_scale='RdBu_r',
-        title="Feature Correlation Matrix",
-        labels=dict(x="Features", y="Features", color="Correlation")
-    )
-    fig.update_layout(width=800, height=800)
-    return fig
+    pass
 
 def create_fraud_distribution(df):
-    fraud_counts = df['fraud'].value_counts().reset_index()
-    fraud_counts.columns = ['Fraud', 'Count']
-    fig = px.pie(
-        fraud_counts, 
-        values='Count', 
-        names='Fraud',
-        title='Fraud vs Non-Fraud Distribution',
-        hole=0.4,
-        color_discrete_sequence=['#3498db', '#e74c3c']
-    )
-    fig.update_traces(
-        textposition='inside', 
-        textinfo='percent+label',
-        marker=dict(line=dict(color='#FFFFFF', width=2))
-    )
-    return fig
+    pass
 
 def create_feature_importance_chart():
     try:
@@ -118,7 +80,7 @@ def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.radio(
         "Select a page",
-        ["Home", "Fraud Prediction", "Data Exploration", "Model Performance", "About"]
+        ["Home", "Fraud Prediction", "Model Performance", "About"]
     )
     
     # Home page
@@ -127,46 +89,23 @@ def main():
         st.markdown("""
         ### Welcome to the Credit Card Fraud Detection Dashboard
         
-        This interactive dashboard provides tools to analyze and predict credit card fraud.
+        This interactive dashboard provides tools to predict credit card fraud.
         
         **Key Features**:
         - ✅ Predict if a transaction is fraudulent
-        - 📊 Explore the dataset and patterns
         - 🔍 Understand model features and importance
         
         **How to use**:
         - Use the sidebar to navigate between different pages
         - On the Fraud Prediction page, enter transaction details to get a prediction
-        - On the Data Exploration page, analyze patterns in the dataset
+        - On the Model Performance page, analyze model performance
         
         **Model Performance**:
         - This dashboard uses a Random Forest model
         - Feature engineering addresses data leakage issues
         - High accuracy in distinguishing fraudulent transactions
         """)
-        
-        # Display sample card image
         st.image("https://img.freepik.com/free-vector/realistic-credit-card-design_23-2149126090.jpg", width=400)
-        
-        # Display key metrics if data is available
-        if data is not None:
-            st.subheader("Dataset Overview")
-            if static_stats is None:
-                # Use real data
-                total_transactions = len(data)
-                fraud_percent = data['fraud'].mean() * 100
-            else:
-                # Use static stats
-                total_transactions = static_stats["total_transactions"]
-                fraud_percent = static_stats["fraud_percent"]
-            
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.metric("Total Transactions", f"{total_transactions:,}")
-            with col2:
-                st.metric("Fraud Transactions", f"{int(total_transactions * fraud_percent / 100):,}")
-            with col3:
-                st.metric("Fraud Percentage", f"{fraud_percent:.2f}%")
     
     # Fraud prediction page
     elif page == "Fraud Prediction":
@@ -176,11 +115,13 @@ def main():
         with st.expander("ℹ️ How to use this tool", expanded=False):
             st.markdown("""
             **This tool helps you predict if a credit card transaction is fraudulent based on its characteristics.**
-            
-            1. Enter your transaction details in the input fields
-            2. Click the "Predict" button to see the results
-            3. Review the fraud probability and risk factors
-            
+
+            1. Enter your transaction details in the input fields below, or
+            2. [View and copy a sample row from the dataset here.](https://docs.google.com/spreadsheets/d/1L-hIk2OE2zhBp6Ou76TMmbeE5ihdbfvp1Uw6MyvbbN4/edit?usp=sharing)
+            3. Paste the row into the quick data entry field.
+            4. Click the "Predict" button to see the results.
+            5. Review the fraud probability and risk factors.
+
             The prediction is based on a Random Forest model trained on historical transaction data.
             """)
         
@@ -479,96 +420,6 @@ def main():
                         })
                         
                         st.dataframe(comparison_data, use_container_width=True)
-    
-    # Data exploration page
-    elif page == "Data Exploration":
-        st.title("Data Exploration")
-        
-        if data is not None:
-            st.write(f"Dataset shape: {data.shape}")
-            
-            # Display sample data
-            st.subheader("Sample Data")
-            # Get a mix of fraud and non-fraud cases for the sample
-            fraud_sample = data[data['fraud'] == 1].sample(min(5, len(data[data['fraud'] == 1])))
-            non_fraud_sample = data[data['fraud'] == 0].sample(min(5, len(data[data['fraud'] == 0])))
-            # Combine and shuffle the samples
-            combined_sample = pd.concat([fraud_sample, non_fraud_sample])
-            combined_sample = combined_sample.sample(frac=1).reset_index(drop=True)
-            st.dataframe(combined_sample)
-            
-            # Tabs for different visualizations
-            tab1, tab2, tab3, tab4 = st.tabs(["Distribution", "Correlation", "Feature Importance", "Statistics"])
-            
-            with tab1:
-                st.plotly_chart(create_fraud_distribution(data), use_container_width=True)
-                
-                # Feature distributions
-                st.subheader("Feature Distributions")
-                feature_to_plot = st.selectbox(
-                    "Select feature to plot distribution",
-                    ['distance_from_home', 'distance_from_last_transaction', 
-                     'ratio_to_median_purchase_price', 'repeat_retailer',
-                     'used_chip', 'used_pin_number', 'online_order']
-                )
-                
-                # Create histogram with fraud vs non-fraud
-                fig = px.histogram(
-                    data, 
-                    x=feature_to_plot,
-                    color='fraud',
-                    barmode='overlay',
-                    histnorm='percent',
-                    labels={'fraud': 'Fraud'},
-                    color_discrete_map={0: '#3498db', 1: '#e74c3c'}
-                )
-                st.plotly_chart(fig, use_container_width=True)
-            
-            with tab2:
-                st.plotly_chart(create_correlation_heatmap(data), use_container_width=True)
-                
-                # Scatter plot for selected features
-                st.subheader("Relationship Between Features")
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    x_axis = st.selectbox("X-axis", data.columns.tolist(), index=0)
-                
-                with col2:
-                    y_axis = st.selectbox("Y-axis", data.columns.tolist(), index=2)
-                
-                fig = px.scatter(
-                    data, 
-                    x=x_axis, 
-                    y=y_axis,
-                    color='fraud',
-                    opacity=0.5,
-                    color_discrete_map={0: '#3498db', 1: '#e74c3c'}
-                )
-                st.plotly_chart(fig, use_container_width=True)
-            
-            with tab3:
-                feature_importance_fig = create_feature_importance_chart()
-                if feature_importance_fig:
-                    st.plotly_chart(feature_importance_fig, use_container_width=True)
-                else:
-                    st.warning("Feature importance chart not available. Make sure the model is properly loaded.")
-            
-            with tab4:
-                st.subheader("Statistical Summary")
-                st.dataframe(data.describe())
-                
-                # Class distribution
-                fraud_stats = data['fraud'].value_counts(normalize=True) * 100
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    st.metric("Non-Fraud Transactions", f"{fraud_stats[0]:.2f}%")
-                
-                with col2:
-                    st.metric("Fraud Transactions", f"{fraud_stats[1]:.2f}%")
-        else:
-            st.warning("Dataset not available for exploration.")
     
     # Model Performance page
     elif page == "Model Performance":

@@ -5,7 +5,6 @@ This Streamlit dashboard provides an interactive interface for exploring credit 
 ## Features
 
 - **Fraud Prediction**: Input transaction details and get real-time fraud predictions
-- **Data Exploration**: Analyze the dataset with interactive visualizations
 - **Model Performance**: Compare the performance of different machine learning models
 - **Interactive Visualizations**: Explore data relationships with dynamic charts
 
@@ -65,15 +64,6 @@ streamlit run app.py
    - Fraud probability gauge
    - Risk factor analysis
    - Feature contribution visualization
-
-### Data Exploration
-
-1. Navigate to the "Data Exploration" page.
-2. Use the tabs to explore different aspects of the data:
-   - Distribution: View fraud distribution and feature histograms
-   - Correlation: Explore relationships between features
-   - Feature Importance: See which features contribute most to predictions
-   - Statistics: Review summary statistics for the dataset
 
 ### Model Performance
 
