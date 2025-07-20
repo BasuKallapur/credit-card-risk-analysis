@@ -1,9 +1,6 @@
 # Credit Card Fraud Detection
 Demo Video: [Watch Demo](https://drive.google.com/file/d/1lZ4IcC6M86f20kwWBCAvDLqeP0-Wv0Xa/view?usp=drive_link)
 
-
-# Credit Card Fraud Detection
-
 This project implements machine learning models for credit card fraud detection, with a focus on identifying and addressing data leakage issues while providing a practical application.
 
 ## Project Overview
