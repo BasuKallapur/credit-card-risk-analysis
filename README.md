@@ -5,6 +5,12 @@ This project implements machine learning models for credit card fraud detection,
 
 ## Project Overview
 
+<img width="1497" height="1600" alt="image" src="https://github.com/user-attachments/assets/560128cc-ddf6-452e-8d22-77f3b7b711a0" />
+
+
+<img width="607" height="1600" alt="image" src="https://github.com/user-attachments/assets/fc34b3cf-e118-46ff-99c7-c546796da5ff" />
+
+
 The project consists of:
 
 1. **Analysis Script** (`credit_card_fraud_detection.py`): Compares four models (Logistic Regression, Decision Tree, SGD, Random Forest)
