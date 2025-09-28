@@ -1,20 +1,17 @@
 # Credit Card Fraud Detection
 Demo Video: [Watch Demo](https://drive.google.com/file/d/1lZ4IcC6M86f20kwWBCAvDLqeP0-Wv0Xa/view?usp=drive_link)
 
-This project implements machine learning models for credit card fraud detection, with a focus on identifying and addressing data leakage issues while providing a practical application.
+This project implements machine learning models for credit card fraud detection, focusing on building accurate, practical, and user-friendly solutions.
 
 ## Project Overview
 
 ![credit_card_fraud_detection_system](https://github.com/user-attachments/assets/8a1a53b6-b2eb-4703-b09a-88b2bcffd114)
 
-<!-- <img width="607" height="1600" alt="image" src="https://github.com/user-attachments/assets/fc34b3cf-e118-46ff-99c7-c546796da5ff" /> -->
-
-
 The project consists of:
 
-1. **Analysis Script** (`credit_card_fraud_detection.py`): Compares four models (Logistic Regression, Decision Tree, SGD, Random Forest)
-2. **Model Training** (`fraud_predictor.py`): Trains and saves the best model (Random Forest)
-3. **Prediction Interface** (`predict_fraud.py`): User-friendly interface for fraud prediction
+1. **Analysis Script** (`credit_card_fraud_detection.py`): Compares four models (Logistic Regression, Decision Tree, SGD, Random Forest)  
+2. **Model Training** (`fraud_predictor.py`): Trains and saves the best model (Random Forest)  
+3. **Prediction Interface** (`predict_fraud.py`): User-friendly interface for fraud prediction  
 
 # Project Structure
 
@@ -40,70 +37,42 @@ credit-card-risk-analysis/
 The `credit_card_fraud_detection.py` script performs a comprehensive analysis of four different machine learning models:
 
 1. **Logistic Regression**
-   - Configuration: Strong regularization (C=0.01, 0.1), balanced class weights
-   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix
+   - Configuration: Strong regularization (C=0.01, 0.1), balanced class weights  
+   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix  
 
 2. **Decision Tree**
-   - Configuration: Limited max_depth (3-4), high min_samples_split (50-100), high min_samples_leaf (20-50)
-   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix
+   - Configuration: Limited max_depth (3-4), high min_samples_split (50-100), high min_samples_leaf (20-50)  
+   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix  
 
 3. **SGD Classifier** (Linear SVM)
-   - Configuration: L2 penalty, hinge loss, strong regularization
-   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix
+   - Configuration: L2 penalty, hinge loss, strong regularization  
+   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix  
 
 4. **Random Forest** (Best performing model)
-   - Configuration: Limited tree depth, high minimum samples for splits/leaves, balanced class weights
-   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix
-   - Feature importance analysis to identify key predictors
+   - Configuration: Limited tree depth, high minimum samples for splits/leaves, balanced class weights  
+   - Evaluation: Accuracy, precision, recall, F1-score, ROC curve, confusion matrix  
+   - Feature importance analysis to identify key predictors  
 
 The script generates various visualization files including:
-- Confusion matrices for each model
-- ROC curves showing model performance
-- Feature importance chart (for Random Forest)
-- Precision-recall curves
-- Model comparison summary
+- Confusion matrices for each model  
+- ROC curves showing model performance  
+- Feature importance chart (for Random Forest)  
+- Precision-recall curves  
+- Model comparison summary  
 
-## Key Findings: Data Leakage Issue
-
-During our analysis, we discovered an important issue that's common in machine learning:
-
-- All models achieved suspiciously high accuracy (99.98% for Random Forest)
-- Initially, we suspected overfitting and implemented anti-overfitting measures:
-  - Reduced tree depth
-  - Increased minimum samples for splits/leaves
-  - Added regularization
-  - Used balanced class weights
-- Despite these measures, accuracy remained near-perfect
-
-### The Real Issue: Data Leakage
-
-Further investigation revealed this wasn't traditional overfitting but **data leakage**:
-
-- The `ratio_to_median_purchase_price` feature had a 46% correlation with fraud
-- When we removed just this one feature, accuracy dropped dramatically from 99.98% to 48.16%
-- This indicated that a single feature was essentially "giving away" the answer
-
-This is an important finding because:
-1. In real-world fraud detection, such a powerful single indicator might not be available in real-time
-2. Fraudsters could potentially learn to circumvent this single detection mechanism
-3. The model wasn't learning complex patterns but relying heavily on one feature
-
-For this project, we decided to keep using all features since:
-1. It demonstrates the importance of feature analysis in fraud detection
-2. The model still performs correctly according to the available data
-3. It highlights how important it is to understand your features before deploying models
+---
 
 ## Dataset
 
 The dataset contains the following features:
-- `distance_from_home` - Distance from home where the transaction happened
-- `distance_from_last_transaction` - Distance from last transaction
-- `ratio_to_median_purchase_price` - Ratio of purchased price to median purchase price (our critical feature)
-- `repeat_retailer` - Is the transaction from same retailer (1 for yes, 0 for no)
-- `used_chip` - Is the transaction through chip (1 for yes, 0 for no)
-- `used_pin_number` - Is the transaction using PIN number (1 for yes, 0 for no)
-- `online_order` - Is the transaction an online order (1 for yes, 0 for no)
-- `fraud` - Is the transaction fraudulent (target variable)
+- `distance_from_home` - Distance from home where the transaction happened  
+- `distance_from_last_transaction` - Distance from last transaction  
+- `ratio_to_median_purchase_price` - Ratio of purchased price to median purchase price  
+- `repeat_retailer` - Is the transaction from same retailer (1 for yes, 0 for no)  
+- `used_chip` - Is the transaction through chip (1 for yes, 0 for no)  
+- `used_pin_number` - Is the transaction using PIN number (1 for yes, 0 for no)  
+- `online_order` - Is the transaction an online order (1 for yes, 0 for no)  
+- `fraud` - Is the transaction fraudulent (target variable)  
 
 ## Setup
 
