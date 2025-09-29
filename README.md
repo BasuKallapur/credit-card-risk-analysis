@@ -5,7 +5,8 @@ This project implements machine learning models for credit card fraud detection,
 
 ## Project Overview
 
-![credit_card_fraud_detection_system](https://github.com/user-attachments/assets/8a1a53b6-b2eb-4703-b09a-88b2bcffd114)
+<img width="700" height="800" alt="image" src="https://github.com/user-attachments/assets/a7a72293-022f-4bae-9bd7-3629e7468967" />
+
 
 The project consists of:
 
