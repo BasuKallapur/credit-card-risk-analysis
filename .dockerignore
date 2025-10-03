@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pytest_cache/
+
+venv/
+.env/
+.venv/
+
+*.ipynb
+.ipynb_checkpoints/
+
+# Exclude large assets and raw datasets from the image context
+assets/
+card_transdata.csv
+card_transdata copy.csv
+
+.git/
+.gitignore
+
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+.streamlit/
+
+build/
+dist/
+**/__pycache__/
