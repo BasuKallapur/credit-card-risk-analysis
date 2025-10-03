@@ -9,7 +9,7 @@ Key components:
 - predict_transaction(): Predicts whether a transaction is fraudulent based on its features
 
 The model uses the following features:
-- distance_from_home: Distance from home where transaction occurred
+- distance_from_home: Distance from home where transaction   occurred
 - distance_from_last_transaction: Distance from last transaction
 - ratio_to_median_purchase_price: Ratio of purchase price to median
 - repeat_retailer: Whether transaction occurred at a repeat retailer (0 or 1)
